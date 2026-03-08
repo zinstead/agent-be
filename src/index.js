@@ -1,10 +1,12 @@
 import express from "express";
 import { getUserAction } from "./agent.js";
 import cors from "cors";
+import morgan from "morgan";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -54,10 +56,8 @@ app.get("/api/projects", (req, res) => {
 
 app.post("/api/agent", async (req, res) => {
   const { input } = req.body;
-  console.log(input);
-
-  // const action = await getUserAction(input);
-  // res.send(action);
+  const action = await getUserAction(input);
+  res.send(action);
 });
 
 app.listen(3000, () => {
