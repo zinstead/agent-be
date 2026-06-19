@@ -221,6 +221,26 @@ export const actions = {
       },
     ],
   },
+  filterMolecules: {
+    description: "筛选分子",
+    parameters: {
+      userGoal: {
+        type: "string",
+        description: "用户的筛选目标",
+      },
+    },
+    examples: [
+      {
+        input: "筛选100个分子，要求分子量小于500，logP在1~3",
+        output: {
+          type: "filterMolecules",
+          parameters: {
+            userGoal: "筛选100个分子，要求分子量小于500，logP在1~3",
+          },
+        },
+      },
+    ],
+  },
 };
 
 export function buildActionsPrompt() {

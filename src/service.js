@@ -1,7 +1,9 @@
 import express from "express";
 import { getUserAction } from "./intent-agent/intent.js";
+import { filterMolecules } from "./filter-agent/filter.js";
 import cors from "cors";
 import morgan from "morgan";
+import axios from "axios";
 
 const app = express();
 app.use(cors());
@@ -12,10 +14,22 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.post("/api/agent", async (req, res) => {
+app.post("/api/agent/intent", async (req, res) => {
   const { messages } = req.body;
-  const action = await getUserAction(messages);
-  res.send(action);
+  const result = await getUserAction(messages);
+  console.log("intent result:", JSON.stringify(result));
+  res.send(result);
+});
+
+app.post("/api/agent/filter", async (req, res) => {
+  const { filterApi, userGoal, filters } = req.body;
+  const message = {
+    currentFilters: filters,
+    userGoal,
+  };
+  const result = await filterMolecules({ message, filterApi });
+  console.log("filter result:", JSON.stringify(result));
+  res.send(result);
 });
 
 app.listen(5000, () => {
