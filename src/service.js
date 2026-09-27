@@ -4,6 +4,7 @@ import { filterMolecules } from "./filter-agent/filter.js";
 import cors from "cors";
 import morgan from "morgan";
 import axios from "axios";
+import _ from "lodash";
 
 const app = express();
 app.use(cors());
@@ -17,18 +18,24 @@ app.get("/", (req, res) => {
 app.post("/api/agent/intent", async (req, res) => {
   const { messages } = req.body;
   const result = await getUserAction(messages);
-  console.log("intent result:", JSON.stringify(result));
-  res.send(result);
+  const action = JSON.parse(result);
+  // const type = _.camelCase(action.type);
+  // const parameters = _.mapKeys(action.parameters, (value, key) =>
+  //   _.camelCase(key),
+  // );
+  // const res2 = { type, parameters };
+  // console.log("intent result:", JSON.stringify(result));
+  res.send(action);
 });
 
 app.post("/api/agent/filter", async (req, res) => {
   const { filterApi, userGoal, filters } = req.body;
   const message = {
-    currentFilters: filters,
-    userGoal,
+    current_filters: filters,
+    user_goal: userGoal,
   };
   const result = await filterMolecules({ message, filterApi });
-  console.log("filter result:", JSON.stringify(result));
+  // console.log("filter result:", JSON.stringify(result));
   res.send(result);
 });
 

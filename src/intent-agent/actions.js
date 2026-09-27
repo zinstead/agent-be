@@ -1,41 +1,148 @@
 export const actions = {
-  showProjectList: {
+  // 项目管理
+  show_project_list: {
     description: "查看/打开/列出项目列表",
     parameters: {},
     examples: [
       {
         input: "查看项目列表",
         output: {
-          type: "showProjectList",
+          type: "show_project_list",
           parameters: {},
         },
       },
       {
         input: "打开项目列表",
         output: {
-          type: "showProjectList",
+          type: "show_project_list",
           parameters: {},
         },
       },
     ],
   },
-  createProject: {
+  create_project: {
     description: "创建项目",
     parameters: {},
     examples: [
       {
         input: "创建项目",
         output: {
-          type: "createProject",
+          type: "create_project",
           parameters: {},
         },
       },
     ],
   },
-  showEntryList: {
+  edit_project: {
+    description: "编辑项目",
+    parameters: {
+      project_id: {
+        type: "number",
+        description: "项目ID",
+      },
+    },
+    examples: [
+      {
+        input: "编辑项目，ID是123",
+        output: {
+          type: "edit_project",
+          parameters: {
+            project_id: 123,
+          },
+        },
+      },
+    ],
+  },
+  view_project: {
+    description: "查看项目",
+    parameters: {
+      project_id: {
+        type: "number",
+        description: "项目ID",
+      },
+    },
+    examples: [
+      {
+        input: "查看项目，ID是123",
+        output: {
+          type: "view_project",
+          parameters: {
+            project_id: 123,
+          },
+        },
+      },
+    ],
+  },
+  search_project: {
+    description: "搜索项目",
+    parameters: {
+      project_id: {
+        type: "number",
+        description: "项目ID（可选）",
+      },
+      project_name: {
+        type: "string",
+        description: "项目名称（可选）",
+      },
+    },
+    examples: [
+      {
+        input: "搜索项目，ID是123",
+        output: {
+          type: "search_project",
+          parameters: {
+            project_id: 123,
+          },
+        },
+      },
+    ],
+  },
+  star_project: {
+    description: "收藏项目",
+    parameters: {
+      project_id: {
+        type: "number",
+        description: "项目ID",
+      },
+    },
+    examples: [
+      {
+        input: "收藏项目，ID是123",
+        output: {
+          type: "star_project",
+          parameters: {
+            project_id: 123,
+          },
+        },
+      },
+    ],
+  },
+  freeze_project: {
+    description: "冻结项目",
+    parameters: {
+      project_id: {
+        type: "number",
+        description: "项目ID",
+      },
+    },
+    examples: [
+      {
+        input: "冻结项目，ID是123",
+        output: {
+          type: "freeze_project",
+          parameters: {
+            project_id: 123,
+          },
+        },
+      },
+    ],
+  },
+
+  // 数据管理
+  show_entry_list: {
     description: "查看/打开/列出某个项目下的Entry List",
     parameters: {
-      projectId: {
+      project_id: {
         type: "number",
         description: "项目ID",
       },
@@ -44,117 +151,125 @@ export const actions = {
       {
         input: "查看项目123的Entry List",
         output: {
-          type: "showEntryList",
+          type: "show_entry_list",
           parameters: {
-            projectId: 123,
+            project_id: 123,
           },
         },
       },
     ],
   },
-  uploadMolecule: {
+  upload_molecule: {
     description: "上传分子/数据",
     parameters: {
-      projectId: {
+      project_id: {
         type: "number",
         description: "项目ID",
       },
-      moleculeType: {
+      molecule_type: {
         type: "string",
         description:
-          "分子类型，包括蛋白质（protein）、共晶分子（cocrystal）和配体（ligand）这三种",
+          "分子类型，包括蛋白质（protein）、配体（ligand）和微扰图（perturbation_map）这三种",
       },
     },
     examples: [
       {
         input: "上传蛋白质，项目ID是123",
         output: {
-          type: "uploadMolecule",
+          type: "upload_molecule",
           parameters: {
-            projectId: 123,
-            moleculeType: "protein",
+            project_id: 123,
+            molecule_type: "protein",
           },
         },
       },
     ],
   },
-  viewEntry: {
-    description: "查看entry（蛋白质、配体组或微扰图）",
+  search_entry: {
+    description: "查找某个Entry（某个数据项，例如蛋白质、配体组、微扰图等）",
     parameters: {
-      projectId: {
+      project_id: {
         type: "number",
         description: "项目ID",
       },
-      entryId: {
+      entry_id: {
+        type: "number",
+        description: "entry的ID（可选）",
+      },
+      entry_name: {
+        type: "string",
+        description: "entry名称（可选）",
+      },
+    },
+    examples: [
+      {
+        input: "查找项目123的Entry，ID是400",
+        output: {
+          type: "search_entry",
+          parameters: {
+            project_id: 123,
+            entry_id: 400,
+          },
+        },
+      },
+    ],
+  },
+  view_entry: {
+    description: "查看entry（蛋白质、配体组或微扰图）",
+    parameters: {
+      project_id: {
+        type: "number",
+        description: "项目ID",
+      },
+      entry_id: {
         type: "number",
         description: "Entry ID",
       },
-      moleculeType: {
-        type: "string",
-        description:
-          "分子类型，包括蛋白质（protein）、配体组（ligand）和微扰图（perturbationMap）这三种",
-      },
     },
     examples: [
       {
-        input: "查看蛋白质，项目ID是123，Entry ID是401",
+        input: "查看蛋白质，项目ID是123，Entry ID是400",
         output: {
-          type: "viewEntry",
+          type: "view_entry",
           parameters: {
-            projectId: 123,
-            entryId: 401,
-            moleculeType: "protein",
+            project_id: 123,
+            entry_id: 400,
           },
         },
       },
     ],
   },
-  submitTask: {
-    description: "提交任务，发起任务",
+  delete_entry: {
+    description: "删除entry（蛋白质、配体组或微扰图）",
     parameters: {
-      projectId: {
+      project_id: {
         type: "number",
         description: "项目ID",
       },
-      taskType: {
-        type: "string",
-        description: "任务类型，包括MD、ABFEP、RBFEP这三种",
-      },
-      taskStep: {
-        type: "string",
-        description:
-          "任务步骤，MD任务有3个步骤：蛋白质准备（proteinPreparation）、配体准备（ligandPreparation）、提交MD任务（submit）；ABFEP任务有4个步骤：蛋白质准备（proteinPreparation）、配体准备（ligandPreparation）、提交ABFEP任务（submit）、校正（correct）；ABFEP任务有6个步骤：蛋白质准备（proteinPreparation）、配体对齐（ligandAlignment）、配体准备（ligandPreparation）、生成微扰图（perturbationMap）、提交RBFEP任务（submit）、校正（correct）",
+      entry_id: {
+        type: "number",
+        description: "Entry ID",
       },
     },
     examples: [
       {
-        input: "提交RBFEP任务，任务ID是123",
+        input: "删除蛋白质，项目ID是123，Entry ID是400",
         output: {
-          type: "submitTask",
+          type: "delete_entry",
           parameters: {
-            projectId: 123,
-            taskType: "RBFEP",
-            taskStep: "submit",
-          },
-        },
-      },
-      {
-        input: "MD任务，蛋白质准备，任务ID是123",
-        output: {
-          type: "submitTask",
-          parameters: {
-            projectId: 123,
-            taskType: "MD",
-            taskStep: "proteinPreparation",
+            project_id: 123,
+            entry_id: 400,
           },
         },
       },
     ],
   },
-  showTaskList: {
+
+  // 任务管理
+  show_task_list: {
     description: "查看/打开/列出任务列表",
     parameters: {
-      projectId: {
+      project_id: {
         type: "number",
         description: "项目ID",
       },
@@ -163,68 +278,254 @@ export const actions = {
       {
         input: "查看项目123的任务列表",
         output: {
-          type: "showTaskList",
+          type: "show_task_list",
           parameters: {
-            projectId: 123,
+            project_id: 123,
           },
         },
       },
     ],
   },
-  showTaskResult: {
+  create_task: {
+    description: "创建任务/提交任务/发起任务",
+    parameters: {
+      project_id: {
+        type: "number",
+        description: "项目ID",
+      },
+      task_type: {
+        type: "string",
+        description: "任务类型，包括MD、ABFEP、RBFEP这三种",
+      },
+      task_step: {
+        type: "string",
+        description:
+          "任务步骤，MD任务有3个步骤：蛋白质准备（protein_preparation）、配体准备（ligand_preparation）、提交MD任务（submit）；ABFEP任务有4个步骤：蛋白质准备（protein_preparation）、配体准备（ligand_preparation）、提交ABFEP任务（submit）、校正（correct）；RBFEP任务有6个步骤：蛋白质准备（protein_preparation）、配体对齐（ligand_alignment）、配体准备（ligand_preparation）、生成微扰图（perturbation_map）、提交RBFEP任务（submit）、校正（correct）",
+      },
+    },
+    examples: [
+      {
+        input: "MD任务的蛋白质准备，项目ID是123",
+        output: {
+          type: "create_task",
+          parameters: {
+            project_id: 123,
+            task_type: "MD",
+            task_step: "protein_preparation",
+          },
+        },
+      },
+      {
+        input: "提交RBFEP任务，项目ID是123",
+        output: {
+          type: "create_task",
+          parameters: {
+            project_id: 123,
+            task_type: "RBFEP",
+            task_step: "submit",
+          },
+        },
+      },
+    ],
+  },
+  show_task_result: {
     description: "查看任务结果",
     parameters: {
-      projectId: {
+      project_id: {
         type: "number",
         description: "项目ID",
       },
-      taskId: {
+      task_id: {
         type: "number",
         description: "任务ID",
       },
     },
     examples: [
       {
-        input: "查看任务ID为1001的结果，项目ID是123",
+        input: "查看任务ID为600的结果，项目ID是123",
         output: {
-          type: "showTaskResult",
+          type: "show_task_result",
           parameters: {
-            projectId: 123,
-            taskId: 1001,
+            project_id: 123,
+            task_id: 600,
           },
         },
       },
     ],
   },
-  postProcessing: {
-    description: "任务的后处理分析",
+  search_task: {
+    description: "搜索/查找任务",
     parameters: {
-      projectId: {
+      project_id: {
         type: "number",
         description: "项目ID",
       },
-      taskId: {
+      task_id: {
+        type: "number",
+        description: "任务ID（可选）",
+      },
+      task_name: {
+        type: "string",
+        description: "任务名称（可选）",
+      },
+    },
+    examples: [
+      {
+        input: "搜索项目123的任务，ID是600",
+        output: {
+          type: "search_task",
+          parameters: {
+            project_id: 123,
+            task_id: 600,
+          },
+        },
+      },
+    ],
+  },
+  stop_task: {
+    description: "停止任务",
+    parameters: {
+      project_id: {
+        type: "number",
+        description: "项目ID",
+      },
+      task_id: {
         type: "number",
         description: "任务ID",
       },
     },
     examples: [
       {
-        input: "后处理，任务是1001，项目是123",
+        input: "停止ID为600的任务，项目是123",
         output: {
-          type: "postProcessing",
+          type: "stop_task",
           parameters: {
-            projectId: 123,
-            taskId: 1001,
+            project_id: 123,
+            task_id: 600,
           },
         },
       },
     ],
   },
-  filterMolecules: {
+  restart_task: {
+    description: "重启任务",
+    parameters: {
+      project_id: {
+        type: "number",
+        description: "项目ID",
+      },
+      task_id: {
+        type: "number",
+        description: "任务ID",
+      },
+    },
+    examples: [
+      {
+        input: "重启ID为600的任务，项目是123",
+        output: {
+          type: "restart_task",
+          parameters: {
+            project_id: 123,
+            task_id: 600,
+          },
+        },
+      },
+    ],
+  },
+
+  // 工作区管理
+  show_workspace_list: {
+    description: "查看/打开/列出工作区列表",
+    parameters: {},
+    examples: [
+      {
+        input: "查看工作区列表",
+        output: {
+          type: "show_workspace_list",
+          parameters: {},
+        },
+      },
+    ],
+  },
+  save_workspace: {
+    description: "保存/分享工作区",
+    parameters: {},
+    examples: [
+      {
+        input: "保存工作区",
+        output: {
+          type: "save_workspace",
+          parameters: {},
+        },
+      },
+    ],
+  },
+  open_workspace: {
+    description: "打开/查看工作区",
+    parameters: {
+      workspace_id: {
+        type: "string",
+        description: "工作区ID",
+      },
+    },
+    examples: [
+      {
+        input: "打开工作区，ID是abc",
+        output: {
+          type: "open_workspace",
+          parameters: {
+            workspace_id: "abc",
+          },
+        },
+      },
+    ],
+  },
+  search_workspace: {
+    description: "搜索工作区",
+    parameters: {
+      workspace_id: {
+        type: "string",
+        description: "工作区ID",
+      },
+    },
+    examples: [
+      {
+        input: "搜索工作区，ID是abc",
+        output: {
+          type: "search_workspace",
+          parameters: {
+            workspace_id: "abc",
+          },
+        },
+      },
+    ],
+  },
+  delete_workspace: {
+    description: "删除工作区",
+    parameters: {
+      workspace_id: {
+        type: "string",
+        description: "工作区ID",
+      },
+    },
+    examples: [
+      {
+        input: "删除工作区，ID是abc",
+        output: {
+          type: "delete_workspace",
+          parameters: {
+            workspace_id: "abc",
+          },
+        },
+      },
+    ],
+  },
+
+  // 分子筛选
+  filter_molecules: {
     description: "筛选分子",
     parameters: {
-      userGoal: {
+      user_goal: {
         type: "string",
         description: "用户的筛选目标",
       },
@@ -233,9 +534,9 @@ export const actions = {
       {
         input: "筛选100个分子，要求分子量小于500，logP在1~3",
         output: {
-          type: "filterMolecules",
+          type: "filter_molecules",
           parameters: {
-            userGoal: "筛选100个分子，要求分子量小于500，logP在1~3",
+            user_goal: "筛选100个分子，要求分子量小于500，logP在1~3",
           },
         },
       },

@@ -47,5 +47,5 @@ export const OutputSchema = z.object({
   filters: FilterSchema,
   // sorter: SorterSchema,
   limit: LimitSchema,
-  reason: z.string(),
+  // reason: z.string(),
 });

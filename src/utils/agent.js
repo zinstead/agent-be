@@ -107,8 +107,8 @@ export function getDecimalPlaces(num) {
 }
 
 export async function binarySearchMol(params) {
-  let { min, max, target, adjustedField, initFilters, filterApi } = params;
-  const { field, direction, range } = adjustedField;
+  let { min, max, target, adjusted_field, init_filters, filterApi } = params;
+  const { field, direction, range } = adjusted_field;
   const decimalPlaces = getDecimalPlaces(min);
   let low, high;
   if (direction === "increase") {
@@ -123,7 +123,7 @@ export async function binarySearchMol(params) {
     minGap = Infinity;
   while (low <= high) {
     const mid = _.round((low + high) / 2, decimalPlaces);
-    const newFilters = initFilters.map((item) => {
+    const newFilters = init_filters.map((item) => {
       if (item.field === field) {
         return { ...item, value: mid };
       } else {

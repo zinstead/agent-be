@@ -1,10 +1,9 @@
 import { createAgent } from "langchain";
-import { count, stats, topKToFilter, adjustFilters } from "./tools.js";
+import { topk_to_filter, adjust_filters } from "./tools.js";
 import { apiKey, baseURL, model } from "../../config.js";
 import { ChatOpenAI } from "@langchain/openai";
 import { systemPrompt } from "./prompt.js";
 import { OutputSchema } from "./schema.js";
-import fs from "fs";
 
 const modelConfig = new ChatOpenAI({
   model,
@@ -12,9 +11,10 @@ const modelConfig = new ChatOpenAI({
   configuration: {
     baseURL: baseURL,
   },
+  // temperature: 0,
 });
 
-const tools = [topKToFilter, adjustFilters];
+const tools = [topk_to_filter, adjust_filters];
 
 const agent = createAgent({
   model: modelConfig,
@@ -40,6 +40,6 @@ export async function filterMolecules(params) {
       },
     },
   );
-  fs.writeFileSync("./result.json", JSON.stringify(result.messages));
+  // fs.writeFileSync("./result.json", JSON.stringify(result.messages));
   return result.structuredResponse;
 }

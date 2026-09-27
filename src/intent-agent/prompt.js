@@ -33,12 +33,11 @@ ${buildActionsPrompt()}
 【参数缺失】
 --------------------------------
 
-如果用户意图能够匹配某个动作，但是缺少必选参数，尝试从上下文补全（例如：当前界面状态的信息）；
-如果能够补全则正常返回action和params；
-如果上下文不明确则向用户询问缺少的参数，返回：
-
+如果用户意图能够匹配某个动作，但是缺少必选参数，首先尝试从上下文补全（例如“当前界面状态”的信息）；
+能够补全参数时，正常返回该动作；
+仍然缺少参数时，向用户询问缺少的参数，返回：
 {
-  "type": "missingParameters",
+  "type": "missing_parameters",
   "parameters": {
     "query": "向用户询问缺少的参数" 
   }
@@ -50,7 +49,7 @@ ${buildActionsPrompt()}
 返回：
 
 {
-  "type": "missingParameters",
+  "type": "missing_parameters",
   "parameters": {
     "query": "缺少参数，请提供项目ID" 
   }
@@ -63,7 +62,7 @@ ${buildActionsPrompt()}
 如果用户意图无法匹配任何动作，或者你无法理解用户意图，返回：
 
 {
-  "type": "unknown",
+  "type": "unknown_action",
   "parameters": {
     "reason":"简短原因"
   }
