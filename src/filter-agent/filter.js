@@ -11,7 +11,6 @@ const modelConfig = new ChatOpenAI({
   configuration: {
     baseURL: baseURL,
   },
-  // temperature: 0,
 });
 
 const tools = [topk_to_filter, adjust_filters];

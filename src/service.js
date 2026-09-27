@@ -19,13 +19,13 @@ app.post("/api/agent/intent", async (req, res) => {
   const { messages } = req.body;
   const result = await getUserAction(messages);
   const action = JSON.parse(result);
-  // const type = _.camelCase(action.type);
-  // const parameters = _.mapKeys(action.parameters, (value, key) =>
-  //   _.camelCase(key),
-  // );
-  // const res2 = { type, parameters };
+  const type = _.camelCase(action.type);
+  const parameters = _.mapKeys(action.parameters, (value, key) =>
+    _.camelCase(key),
+  );
+  const res2 = { type, parameters };
   // console.log("intent result:", JSON.stringify(result));
-  res.send(action);
+  res.send(res2);
 });
 
 app.post("/api/agent/filter", async (req, res) => {
