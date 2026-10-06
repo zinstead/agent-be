@@ -110,13 +110,15 @@ export async function binarySearchMol(params) {
   let { min, max, target, adjusted_field, init_filters, filterApi } = params;
   const { field, direction, range } = adjusted_field;
   const decimalPlaces = getDecimalPlaces(min);
+  // 当前软约束阈值：上界形式（字段 < b）取 range[1]，下界形式（字段 > a）取 range[0]
+  const currentThreshold = range[0] !== null ? range[0] : range[1];
   let low, high;
   if (direction === "increase") {
-    low = range[1];
+    low = currentThreshold;
     high = max;
   } else {
     low = min;
-    high = range[1];
+    high = currentThreshold;
   }
   const precisionStep = Math.pow(10, -decimalPlaces);
   let result,

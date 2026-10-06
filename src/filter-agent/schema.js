@@ -28,12 +28,10 @@ const FilterGroupSchema = z.lazy(() =>
 // 最终 filters 参数可以是单个条件组，或者为了向后兼容允许 null/空对象
 export const FilterSchema = z.array(ConditionSchema).optional();
 
-export const SorterSchema = z
-  .object({
-    sortBy: z.string(),
-    order: z.enum(["asc", "desc"]),
-  })
-  .optional();
+export const SorterSchema = z.object({
+  sortBy: z.string(),
+  order: z.enum(["asc", "desc"]),
+});
 
 export const LimitSchema = z.number().int().min(1).optional();
 
